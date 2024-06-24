@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 
+// Initial file structure with HTML file
 const initialFiles = {
   "index.html": {
     name: "index.html",
@@ -10,6 +11,7 @@ const initialFiles = {
   },
 };
 
+// All possible files including CSS and JavaScript
 const allFiles = {
   ...initialFiles,
   "style.css": {
@@ -33,6 +35,7 @@ export default function Home() {
   const [popupMessage, setPopupMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
 
+  // Update file content on editor change
   function handleEditorChange(value) {
     const updatedFiles = { ...files };
     updatedFiles[fileName].value = value;
@@ -41,6 +44,7 @@ export default function Home() {
 
   const file = files[fileName];
 
+  // Add event listeners for Run and Close buttons
   useEffect(() => {
     const runBtn = document.getElementById("runCode");
     const clsBtn = document.getElementById("closeWindow");
@@ -56,17 +60,20 @@ export default function Home() {
     });
   }, [files]);
 
+  // Get button CSS class based on active file
   const getButtonClass = (name) => {
     return fileName === name
       ? "px-4 py-2 text-sm text-white flex flex-row bg-green-500 rounded-"
       : "px-4 py-2 text-sm text-white flex flex-row bg-gray-900";
   };
 
+  // Change active file
   const handleFileChange = (name) => {
     setFileName(name);
     document.getElementById("outputWindow").style.display = "none";
   };
 
+  // Create new file and show popup
   const createFile = (name) => {
     const updatedFiles = { ...files, [name]: allFiles[name] };
     setFiles(updatedFiles);
